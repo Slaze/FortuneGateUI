@@ -135,71 +135,18 @@ Then open <http://localhost:8000>.
 
 You can also just **double-click `index.html`** — it works straight off the filesystem.
 
----
-
-## ☁️ Hosting
-
-### GitHub Pages (already configured)
-The site is served from the `main` branch root. To re-deploy after editing:
-
-```bash
-git add .
-git commit -m "update copy"
-git push
-```
-
-GitHub Pages rebuilds automatically — give it ~30 seconds.
-
-To re-enable from scratch:
-1. Repo → **Settings → Pages**
-2. **Source:** Deploy from a branch
-3. **Branch:** `main` / `(root)` → **Save**
-
-### Netlify (mirror)
-Drag the repo folder onto <https://app.netlify.com/drop> for an instant deploy. Or connect the GitHub repo for auto-deploys on push.
-
-### Embedding in the Laravel app
-Drop these files into `public/preview/` of the FortuneGate Laravel project:
-
-```
-public/preview/
-├── index.html
-├── 01-wireframes.html
-├── 02-prototype.html
-└── 03-desktop.html
-```
-
-Then share `https://yoursite.com/preview/`.
-
----
-
-## ❓ FAQ
 
 **Q: Is this the real product?**
 No. It's a static visual mock — no real authentication, no database, no payments. Click flows are scripted to demonstrate the intended experience.
 
-**Q: Why does some data look fake?**
+**Q: Why does some data look manufactured?**
 All numbers, names and articles are placeholder content for demonstration. Final copy and imagery will replace them during build.
 
 **Q: Can I edit the screens?**
 The HTML is hand-written and editable, but design changes are easier to discuss in feedback rounds. Send notes; we'll iterate.
 
 **Q: What's the next step after sign-off?**
-Implementation in Laravel 11 / Blade following the design tokens used here. The artifacts in this repo serve as the visual spec.
-
----
-
-## 📋 Open questions for the client
-
-These are pinned on the closing slide of the PDF deck — please confirm during review:
-
-1. **Real photography & brand imagery** — currently using striped placeholders.
-2. **Tier pricing & payout amounts** — confirm ₦2K / 5K / 12K / 25K and ₦100 / ₦50 referral payouts.
-3. **Payment provider** — Paystack, Flutterwave, USSD, bank transfer? Pick.
-4. **Localisation & copy review** — confirm prosperity-coded voice in Nigerian English is on-brand.
-5. **Live-streaming events** — required for v1 launch, or phase 2?
-6. **Give-away cadence & prizes** — monthly is assumed; confirm prize categories.
-
+Implementation following the design here. 
 ---
 
 **FortuneGate · UI preview · v0.1**
