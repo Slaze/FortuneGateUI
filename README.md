@@ -30,8 +30,7 @@ index.html            ← landing (the studio — branches off to everything)
 │
 ├── 01-wireframes.html   Lo-fi sketchy flow exploration
 ├── 02-prototype.html    Hi-fi clickable mobile prototype (iPhone)
-├── 03-desktop.html      Admin console (back-office only)
-└── 04-logos.html        Brand & logo exploration
+└── 03-desktop.html      Admin console (back-office only)
 ```
 
 Every artifact has an **"← All artifacts"** link in its chrome that returns you to the studio (`index.html`).
@@ -50,7 +49,6 @@ Every artifact has an **"← All artifacts"** link in its chrome that returns yo
 | **`01-wireframes.html`** | Low-fidelity flow map of every mobile screen with arrows showing the user journey. | Validate **structure** — flows, screen order, what connects to what. |
 | **`02-prototype.html`** | High-fidelity clickable mobile prototype (20+ screens) in an iPhone frame. | Validate the **mobile experience** — auth, content, plans, dashboard, earn, give-away, profile. |
 | **`03-desktop.html`** | Desktop admin console — dashboard, content table, users table — plus the internal Plans surface. | Validate **admin tooling**. |
-| **`04-logos.html`** | Logo exploration — six directions, each shown as a lockup with dark / light / mono treatments. | Lock in the **mark** before final export. |
 | `fg-public.css` | Shared stylesheet for the public pages (`homepage`, `about`, `how-to`, `claim`). | — |
 | `*.jsx` | React component scripts loaded by the prototypes. Must sit alongside the HTML. | — |
 | `.nojekyll` | Disables Jekyll processing on GitHub Pages so files load as-is. | — |
@@ -64,9 +62,9 @@ Every artifact has an **"← All artifacts"** link in its chrome that returns yo
 Pick either link above. They're identical mirrors.
 
 ### Step 2 — Land on the studio
-You'll arrive at a dark page titled **"UI screens, prototypes & brand"**. There's a **"View live site →"** link in the top-right that opens the marketing site in the same tab. Below, you'll see:
+You'll arrive at a dark page titled **"UI screens & prototypes"**. There's a **"View live site →"** link in the top-right that opens the marketing site in the same tab. Below, you'll see:
 - A short intro and the project's KPI targets (10M subscribers, ₦50B MRR, etc.)
-- **Five cards** — one per artifact (Wireframes → Marketing homepage → Mobile prototype → Admin console → Brand & logos).
+- **Four cards** — one per artifact (Wireframes → Marketing homepage → Mobile prototype → Admin console).
 - A **Public sub-pages** strip linking to About, How To, and Claim Reward.
 - The **design system** swatches (tier accents + surfaces).
 
@@ -108,8 +106,6 @@ Back-office only. Sidebar shell with:
 
 Use the sidebar to switch between views.
 
-#### 🟡 Card 05 — Brand & logos (`04-logos.html`)
-Six logo directions for FortuneGate — Gate Arch, Threshold F, Key Crest, Sunrise Gate, Coin Monogram, Wordmark. Each direction is shown as a hero lockup plus dark / light / mono treatments.
 
 ### Step 4 — Leave feedback
 The fastest path:
@@ -180,13 +176,19 @@ You can also **double-click `index.html`** — most pages work straight off the 
 **Q: Is this the real product?**
 No. It's a static visual mock — no real authentication, no database, no payments. Click flows are scripted to demonstrate the intended experience.
 
-**Q: Are these actual Data of the Platform?**
+**Q: Why does some data look manufactured?**
 All numbers, names and articles are placeholder content for demonstration. Final copy and imagery will replace them during build.
 
-**Q: Can the screens be edited?**
-Send notes; we'll iterate and make the edits in production.
+**Q: Can I edit the screens?**
+The HTML is hand-written and editable, but design changes are easier to discuss in feedback rounds. Send notes; we'll iterate.
+
+**Q: Does it work on my iPhone 7?**
+Yes. Earlier builds shipped a self-contained bundle that needed `DecompressionStream` (Safari 16.4+), which broke iOS 15. That bundle was removed — the current site uses only standard HTML/CSS/JS and supports iOS 15 and up.
+
+**Q: What's the next step after sign-off?**
+Implementation following the design here.
 
 ---
 
 **FortuneGate · UI preview · v0.2**
-Last updated: 17 May 2026
+Last updated: May 2026
