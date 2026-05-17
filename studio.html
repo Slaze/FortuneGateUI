@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FortuneGate · Design studio</title>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs><linearGradient id="bgg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A0E0B"/><stop offset="1" stop-color="#1A2421"/></linearGradient><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D4A017"/><stop offset="1" stop-color="#2E7D32"/></linearGradient></defs>
+  <rect width="200" height="200" fill="url(#bgg)"/>
+  <rect x="60" y="60" width="80" height="80" rx="20" fill="url(#fg)"/>
+  <text x="100" y="124" text-anchor="middle" font-family="Syne, sans-serif" font-weight="800" font-size="56" fill="#0A0E0B">F</text>
+</svg>
+</template>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --fg-green-700:#2E7D32; --fg-green-500:#43A047; --fg-green-300:#81C784;
+    --fg-gold-700:#B8860B; --fg-gold-500:#D4A017; --fg-gold-300:#E8C547;
+    --fg-bg-base:#0A0E0B; --fg-bg-raised:#11181C;
+    --fg-border:rgba(212,160,23,.12); --fg-border-hi:rgba(212,160,23,.32);
+    --fg-text-hi:#F5F7F3; --fg-text-mid:#B8C2BC; --fg-text-lo:#6B7770;
+    --font-display:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#050706;color:var(--fg-text-hi);font-family:var(--font-body);min-height:100vh}
+  body{
+    background:
+      radial-gradient(1200px 700px at 90% -10%, rgba(212,160,23,.10), transparent 60%),
+      radial-gradient(900px 600px at -10% 110%, rgba(46,125,50,.12), transparent 55%),
+      #050706;
+    padding:48px 32px 80px;
+  }
+  .display{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+  .num{font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums}
+  .overline{font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-text-lo)}
+  .mid{color:var(--fg-text-mid)} .lo{color:var(--fg-text-lo)}
+
+  .wrap{max-width:1180px;margin:0 auto}
+  .header{display:flex;align-items:center;gap:16px;margin-bottom:48px}
+  .logo{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--fg-gold-500),var(--fg-green-700));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;color:#0A0E0B;font-size:28px;box-shadow:0 0 48px rgba(212,160,23,.3)}
+  .header h1{font-family:var(--font-display);font-weight:700;font-size:30px;margin:0;letter-spacing:-.01em}
+  .header .sub{color:var(--fg-text-lo);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-top:4px}
+
+  .hero{margin-bottom:56px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+  .hero h2{font-family:var(--font-display);font-weight:700;font-size:clamp(36px,4.6vw,58px);line-height:1.04;letter-spacing:-.015em;margin:0 0 18px}
+  .hero h2 em{font-style:normal;background:linear-gradient(135deg,var(--fg-gold-500),var(--fg-gold-300));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:16px;line-height:1.6;color:var(--fg-text-mid);margin:0 0 22px;max-width:520px}
+  .hero .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--fg-text-lo)}
+  .hero .meta span b{color:var(--fg-gold-300);font-weight:600;font-family:var(--font-display);margin-right:4px}
+
+  .stat-card{
+    background:linear-gradient(135deg,rgba(212,160,23,.10) 0%,rgba(17,24,28,.65) 60%);
+    border:1px solid var(--fg-border-hi);border-radius:24px;padding:28px;
+    box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 32px rgba(212,160,23,.18);
+  }
+  .stat-card .row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--fg-border)}
+  .stat-card .row:last-child{border-bottom:none}
+  .stat-card .row .l{font-size:13px;color:var(--fg-text-mid)}
+  .stat-card .row .v{font-family:var(--font-display);font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;color:var(--fg-gold-300)}
+
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .card{
+    background:rgba(17,24,28,.55);backdrop-filter:blur(20px) saturate(140%);
+    border:1px solid var(--fg-border);border-radius:24px;
+    overflow:hidden;display:flex;flex-direction:column;
+    text-decoration:none;color:inherit;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    cursor:pointer;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--fg-border-hi);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 32px rgba(212,160,23,.15)}
+
+  .preview{height:240px;position:relative;overflow:hidden;border-bottom:1px solid var(--fg-border)}
+  .preview svg{width:100%;height:100%;display:block}
+
+  .card-body{padding:22px}
+  .card .step{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-gold-500);font-weight:600;margin-bottom:10px}
+  .card .step::before{content:'';width:6px;height:6px;border-radius:3px;background:var(--fg-gold-500);box-shadow:0 0 8px var(--fg-gold-500)}
+  .card h3{font-family:var(--font-display);font-weight:700;font-size:22px;margin:0 0 8px;letter-spacing:-.01em}
+  .card p{font-size:14px;line-height:1.55;color:var(--fg-text-mid);margin:0 0 16px}
+  .card .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .card .tag{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(212,160,23,.08);border:1px solid var(--fg-border);color:var(--fg-text-mid);letter-spacing:.06em;text-transform:uppercase}
+  .card .open{display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--fg-gold-300);padding-top:12px;border-top:1px solid var(--fg-border)}
+  .card .open svg{transition:transform .2s}
+  .card:hover .open svg{transform:translateX(4px)}
+
+  .section{margin-top:64px}
+  .section h2{font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-text-lo);margin:0 0 18px}
+
+  .system-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .swatch{
+    background:rgba(17,24,28,.55);border:1px solid var(--fg-border);border-radius:16px;padding:18px;
+  }
+  .swatch .chip{height:72px;border-radius:12px;margin-bottom:12px}
+  .swatch .name{font-family:var(--font-display);font-weight:600;font-size:14px}
+  .swatch .hex{font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace;font-size:11px;color:var(--fg-text-lo);margin-top:2px}
+
+  .chip-basic{background:#6B7770}
+  .chip-std{background:#43A047}
+  .chip-prem{background:#D4A017}
+  .chip-vip{background:#B8860B}
+  .chip-elite{background:linear-gradient(135deg,#D4A017 0%,#2E7D32 100%)}
+  .chip-bg{background:#0A0E0B;border:1px solid var(--fg-border)}
+  .chip-raised{background:#11181C;border:1px solid var(--fg-border)}
+  .chip-overlay{background:#1A2421;border:1px solid var(--fg-border)}
+
+  .footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--fg-border);font-size:12px;color:var(--fg-text-lo);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+    .system-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="logo">F</div>
+      <div>
+        <div class="sub">FortuneGate · Design studio</div>
+        <h1>UI screens, prototypes &amp; brand</h1>
+      </div>
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--fg-text-mid);font-size:13px;font-family:var(--font-body);padding:10px 16px;border-radius:10px;border:1px solid var(--fg-border);text-decoration:none;transition:.15s" onmouseover="this.style.borderColor='var(--fg-border-hi)';this.style.color='var(--fg-gold-300)'" onmouseout="this.style.borderColor='var(--fg-border)';this.style.color='var(--fg-text-mid)'">View live site →</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h2>Premium content,<br/>real referrals,<br/><em>monthly giveaways.</em></h2>
+      <p>Bridging the knowledge and capital gap for African entrepreneurs. Life hacks, health &amp; fitness advice, business tips and growth tips — paired with give-aways and a tiered referral programme that turns subscribers into a network.</p>
+      <div class="meta">
+        <span><b>32</b>screens</span>
+        <span><b>6</b>flows</span>
+        <span><b>5</b>tiers</span>
+        <span><b>NGN</b>currency</span>
+        <span><b>3G</b>optimized</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="row"><span class="l">Library</span><span class="v">1,242 articles</span></div>
+      <div class="row"><span class="l">MRR target Y1</span><span class="v">₦50B</span></div>
+      <div class="row"><span class="l">Subscription target</span><span class="v">10M</span></div>
+      <div class="row"><span class="l">Tiers</span><span class="v">Basic → Elite</span></div>
+      <div class="row"><span class="l">Auth</span><span class="v">Phone + OTP</span></div>
+    </div>
+  </section>
+
+  <div class="cards">
+    <a class="card" href="01-wireframes.html">
+      <div class="preview" style="background:#fafaf6">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="360" height="240" fill="#fafaf6"/>
+          <g stroke="#1a1a1a" stroke-width="1.5" fill="none">
+            <rect x="20" y="30" width="80" height="160" rx="10"/>
+            <line x1="30" y1="48" x2="80" y2="48"/>
+            <rect x="30" y="60" width="60" height="50" rx="4" fill="#fff5e1" stroke-dasharray="3 2"/>
+            <line x1="30" y1="120" x2="90" y2="120" stroke-width="2"/>
+            <line x1="30" y1="132" x2="75" y2="132"/>
+            <rect x="30" y="150" width="60" height="22" rx="11" fill="#ffe49a"/>
+            <text x="60" y="165" text-anchor="middle" font-family="Syne, sans-serif" font-weight="700" font-size="9" stroke="none" fill="#1a1a1a">CTA</text>
+            <rect x="120" y="30" width="80" height="160" rx="10"/>
+            <circle cx="160" cy="70" r="14" fill="#d6f0d6"/>
+            <line x1="135" y1="100" x2="185" y2="100" stroke-width="2"/>
+            <line x1="135" y1="112" x2="180" y2="112"/>
+            <line x1="135" y1="124" x2="170" y2="124"/>
+            <rect x="135" y="148" width="50" height="20" rx="10" fill="#1a1a1a"/>
+            <rect x="220" y="30" width="120" height="160" rx="10"/>
+            <rect x="232" y="44" width="96" height="44" rx="6" fill="#fff5e1" stroke-dasharray="3 2"/>
+            <line x1="232" y1="100" x2="328" y2="100" stroke-width="2"/>
+            <line x1="232" y1="112" x2="320" y2="112"/>
+            <line x1="232" y1="124" x2="310" y2="124"/>
+            <rect x="232" y="142" width="40" height="38" rx="6" fill="#d6f0d6"/>
+            <rect x="280" y="142" width="48" height="38" rx="6" fill="#fff5e1"/>
+          </g>
+          <path d="M100,110 Q110,110 118,110" stroke="#d4a017" stroke-width="2" fill="none" marker-end="url(#a)"/>
+          <path d="M200,110 Q210,110 218,110" stroke="#d4a017" stroke-width="2" fill="none" marker-end="url(#a)"/>
+          <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d4a017"/></marker></defs>
+        </svg>
+      </div>
+      <div class="card-body">
+        <span class="step">Step 01 · Diverge</span>
+        <h3>Wireframes &amp; webflow</h3>
+        <p>Sketchy lo-fi exploration of the entire app — auth, content, plans, dashboard, admin — laid out as a single zoomable canvas with arrows.</p>
+        <div class="tags"><span class="tag">B&amp;W</span><span class="tag">Sketchy</span><span class="tag">All flows</span></div>
+        <div class="open"><span>Open canvas</span><svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7h19M16 1l6 6-6 6"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" href="02-prototype.html">
+      <div class="preview" style="background:linear-gradient(135deg,#0a0e0b 0%,#11181C 100%)">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="360" height="240" fill="transparent"/>
+          <g transform="translate(126,18)">
+            <rect x="0" y="0" width="108" height="220" rx="22" fill="#000" stroke="#2a2a2a"/>
+            <rect x="6" y="6" width="96" height="208" rx="17" fill="#0A0E0B"/>
+            <rect x="42" y="10" width="24" height="6" rx="3" fill="#000"/>
+            <text x="54" y="48" text-anchor="middle" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#F5F7F3">Hi, Tunde</text>
+            <rect x="14" y="60" width="80" height="46" rx="10" fill="rgba(212,160,23,.12)" stroke="rgba(212,160,23,.32)"/>
+            <text x="20" y="76" font-family="DM Sans, sans-serif" font-size="6" fill="#E8C547" font-weight="600" letter-spacing="1">PREMIUM</text>
+            <text x="20" y="94" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#F5F7F3">₦8,400</text>
+            <rect x="14" y="114" width="38" height="32" rx="8" fill="rgba(17,24,28,.8)" stroke="rgba(212,160,23,.12)"/>
+            <text x="33" y="128" text-anchor="middle" font-family="Syne, sans-serif" font-weight="700" font-size="11" fill="#F5F7F3">42</text>
+            <text x="33" y="138" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">REFER</text>
+            <rect x="56" y="114" width="38" height="32" rx="8" fill="rgba(17,24,28,.8)" stroke="rgba(212,160,23,.12)"/>
+            <text x="75" y="128" text-anchor="middle" font-family="Syne, sans-serif" font-weight="700" font-size="11" fill="#F5F7F3">35</text>
+            <text x="75" y="138" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">ENTRIES</text>
+            <rect x="14" y="154" width="80" height="38" rx="8" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+            <line x1="20" y1="166" x2="50" y2="166" stroke="#F5F7F3" stroke-width="1"/>
+            <line x1="20" y1="174" x2="80" y2="174" stroke="#B8C2BC" stroke-width=".7"/>
+            <line x1="20" y1="180" x2="70" y2="180" stroke="#B8C2BC" stroke-width=".7"/>
+            <rect x="6" y="200" width="96" height="14" fill="rgba(10,14,11,.85)"/>
+            <circle cx="20" cy="207" r="2" fill="#D4A017"/>
+            <circle cx="35" cy="207" r="2" fill="#6B7770"/>
+            <circle cx="54" cy="207" r="2" fill="#6B7770"/>
+            <circle cx="73" cy="207" r="2" fill="#6B7770"/>
+            <circle cx="88" cy="207" r="2" fill="#6B7770"/>
+          </g>
+          <circle cx="60" cy="120" r="36" fill="rgba(212,160,23,.06)"/>
+          <circle cx="300" cy="120" r="48" fill="rgba(46,125,50,.06)"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <span class="step">Step 02 · Prototype</span>
+        <h3>Mobile prototype</h3>
+        <p>Hi-fi clickable iPhone prototype. 18 screens across auth, onboarding, content, plans, dashboard, earn, giveaway and profile — all in glass + gold.</p>
+        <div class="tags"><span class="tag">iOS</span><span class="tag">Clickable</span><span class="tag">375px</span><span class="tag">Dark-first</span></div>
+        <div class="open"><span>Open prototype</span><svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7h19M16 1l6 6-6 6"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" href="03-desktop.html">
+      <div class="preview" style="background:#0a0e0b">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="360" height="240" fill="#050706"/>
+          <rect x="14" y="18" width="64" height="208" rx="8" fill="rgba(17,24,28,.7)" stroke="rgba(212,160,23,.12)"/>
+          <rect x="22" y="28" width="14" height="14" rx="3" fill="url(#bg)"/>
+          <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D4A017"/><stop offset="1" stop-color="#2E7D32"/></linearGradient></defs>
+          <text x="40" y="38" font-family="Syne, sans-serif" font-weight="700" font-size="7" fill="#F5F7F3">FortuneGate</text>
+          <rect x="20" y="58" width="52" height="6" rx="2" fill="rgba(212,160,23,.16)"/>
+          <rect x="18" y="56" width="2" height="10" fill="#D4A017"/>
+          <rect x="20" y="72" width="40" height="4" rx="2" fill="#6B7770"/>
+          <rect x="20" y="84" width="40" height="4" rx="2" fill="#6B7770"/>
+          <rect x="20" y="96" width="40" height="4" rx="2" fill="#6B7770"/>
+          <rect x="20" y="116" width="40" height="4" rx="2" fill="#6B7770"/>
+          <rect x="20" y="128" width="40" height="4" rx="2" fill="#6B7770"/>
+          <rect x="86" y="18" width="260" height="22" rx="6" fill="rgba(17,24,28,.7)" stroke="rgba(212,160,23,.12)"/>
+          <rect x="100" y="26" width="80" height="6" rx="2" fill="#6B7770"/>
+          <circle cx="335" cy="29" r="6" fill="url(#bg)"/>
+          <g transform="translate(86,46)">
+            <rect x="0" y="0" width="62" height="42" rx="8" fill="rgba(212,160,23,.10)" stroke="rgba(212,160,23,.32)"/>
+            <text x="6" y="14" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">MRR</text>
+            <text x="6" y="30" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#E8C547">₦12.4M</text>
+            <rect x="68" y="0" width="62" height="42" rx="8" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+            <text x="74" y="14" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">SUBS</text>
+            <text x="74" y="30" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#F5F7F3">82,144</text>
+            <rect x="136" y="0" width="62" height="42" rx="8" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+            <text x="142" y="14" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">CHURN</text>
+            <text x="142" y="30" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#F5F7F3">3.4%</text>
+            <rect x="204" y="0" width="56" height="42" rx="8" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+            <text x="210" y="14" font-family="DM Sans, sans-serif" font-size="5" fill="#6B7770" letter-spacing=".5">PAYOUT</text>
+            <text x="210" y="30" font-family="Syne, sans-serif" font-weight="700" font-size="13" fill="#F5F7F3">₦1.8M</text>
+          </g>
+          <rect x="86" y="98" width="260" height="128" rx="8" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+          <path d="M96,200 C120,190 140,170 170,160 C200,150 230,170 260,140 C290,110 320,120 340,108" fill="none" stroke="#D4A017" stroke-width="1.6"/>
+          <path d="M96,200 C120,190 140,170 170,160 C200,150 230,170 260,140 C290,110 320,120 340,108 L340,220 L96,220 Z" fill="rgba(212,160,23,.12)"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <span class="step">Step 03 · Operate</span>
+        <h3>Desktop admin + plans</h3>
+        <p>Sidebar shell with admin dashboard, content library and users tables — plus the public marketing-style plans page with feature comparison.</p>
+        <div class="tags"><span class="tag">Desktop</span><span class="tag">Admin</span><span class="tag">Plans</span><span class="tag">1440px</span></div>
+    </a>
+
+    <a class="card" href="index.html">
+      <div class="preview" style="background:#0a0e0b">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="360" height="240" fill="#050706"/>
+          <defs>
+            <linearGradient id="hp-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D4A017"/><stop offset="1" stop-color="#2E7D32"/></linearGradient>
+            <radialGradient id="hp-glow" cx=".85" cy="-.1" r=".8"><stop offset="0" stop-color="#D4A017" stop-opacity=".22"/><stop offset="1" stop-color="#D4A017" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="360" height="240" fill="url(#hp-glow)"/>
+          <!-- nav -->
+          <rect x="14" y="14" width="332" height="22" rx="6" fill="rgba(17,24,28,.7)" stroke="rgba(212,160,23,.16)"/>
+          <rect x="22" y="22" width="10" height="6" rx="2" fill="url(#hp-grad)"/>
+          <rect x="36" y="22" width="50" height="6" rx="2" fill="#F5F7F3"/>
+          <rect x="160" y="23" width="22" height="4" rx="2" fill="#6B7770"/>
+          <rect x="186" y="23" width="18" height="4" rx="2" fill="#6B7770"/>
+          <rect x="208" y="23" width="30" height="4" rx="2" fill="#6B7770"/>
+          <rect x="296" y="19" width="42" height="12" rx="6" fill="#D4A017"/>
+          <!-- hero left text -->
+          <rect x="22" y="60" width="60" height="5" rx="2" fill="#E8C547"/>
+          <rect x="22" y="74" width="170" height="10" rx="3" fill="#F5F7F3"/>
+          <rect x="22" y="90" width="140" height="10" rx="3" fill="#F5F7F3"/>
+          <rect x="22" y="106" width="110" height="10" rx="3" fill="url(#hp-grad)"/>
+          <rect x="22" y="124" width="170" height="4" rx="2" fill="#B8C2BC"/>
+          <rect x="22" y="132" width="150" height="4" rx="2" fill="#B8C2BC"/>
+          <rect x="22" y="152" width="60" height="18" rx="9" fill="#D4A017"/>
+          <rect x="88" y="152" width="56" height="18" rx="9" fill="none" stroke="rgba(212,160,23,.32)"/>
+          <!-- hero card right (giveaway) -->
+          <rect x="210" y="54" width="130" height="126" rx="10" fill="rgba(212,160,23,.10)" stroke="rgba(212,160,23,.32)"/>
+          <circle cx="222" cy="66" r="3" fill="#43A047"/>
+          <rect x="230" y="63" width="40" height="4" rx="2" fill="#E8C547"/>
+          <rect x="220" y="78" width="80" height="7" rx="2" fill="#F5F7F3"/>
+          <rect x="220" y="94" width="110" height="38" rx="6" fill="#11181C"/>
+          <circle cx="275" cy="113" r="10" fill="none" stroke="rgba(212,160,23,.32)"/>
+          <rect x="220" y="140" width="24" height="18" rx="4" fill="#0A0E0B" stroke="rgba(212,160,23,.16)"/>
+          <rect x="248" y="140" width="24" height="18" rx="4" fill="#0A0E0B" stroke="rgba(212,160,23,.16)"/>
+          <rect x="276" y="140" width="24" height="18" rx="4" fill="#0A0E0B" stroke="rgba(212,160,23,.16)"/>
+          <!-- category strip -->
+          <rect x="14" y="196" width="78" height="30" rx="6" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+          <rect x="96" y="196" width="78" height="30" rx="6" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+          <rect x="178" y="196" width="78" height="30" rx="6" fill="rgba(17,24,28,.55)" stroke="rgba(212,160,23,.12)"/>
+          <rect x="260" y="196" width="86" height="30" rx="6" fill="rgba(212,160,23,.10)" stroke="rgba(212,160,23,.32)"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <span class="step">Step 04 · Market</span>
+        <h3>Marketing homepage</h3>
+        <p>Public landing page — nav with About / How To / Claim Reward / Premium, hero with live giveaway countdown, content categories, plans, referral payout, winners and FAQ.</p>
+        <div class="tags"><span class="tag">Landing</span><span class="tag">Public</span><span class="tag">Responsive</span><span class="tag">SEO-ready</span></div>
+        <div class="open"><span>Open homepage</span><svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7h19M16 1l6 6-6 6"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <section class="section">
+    <h2>Tier accents</h2>
+    <div class="system-grid">
+      <div class="swatch"><div class="chip chip-basic"></div><div class="name">Basic · L1</div><div class="hex">#6B7770</div></div>
+      <div class="swatch"><div class="chip chip-std"></div><div class="name">Standard · L2</div><div class="hex">#43A047</div></div>
+      <div class="swatch"><div class="chip chip-prem"></div><div class="name">Premium · L3</div><div class="hex">#D4A017</div></div>
+      <div class="swatch"><div class="chip chip-elite"></div><div class="name">Elite · L5</div><div class="hex">gold → green</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Surfaces</h2>
+    <div class="system-grid">
+      <div class="swatch"><div class="chip chip-bg"></div><div class="name">Page · base</div><div class="hex">#0A0E0B</div></div>
+      <div class="swatch"><div class="chip chip-raised"></div><div class="name">Card · raised</div><div class="hex">#11181C</div></div>
+      <div class="swatch"><div class="chip chip-overlay"></div><div class="name">Modal · overlay</div><div class="hex">#1A2421</div></div>
+      <div class="swatch"><div class="chip" style="background:linear-gradient(135deg,rgba(212,160,23,.10) 0%,rgba(17,24,28,.65) 60%);border:1px solid rgba(212,160,23,.32);box-shadow:0 0 32px rgba(212,160,23,.18)"></div><div class="name">Glass · gold</div><div class="hex">signature</div></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Syne · DM Sans · NGN · mobile-first @ 375 · dark-first</span>
+    <span>FortuneGate UI screens &amp; webflow · v0.1</span>
+  </footer>
+</div>
+</body>
+</html>
