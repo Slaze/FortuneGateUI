@@ -33,7 +33,7 @@ function AdminShell({page, setPage, children}){
             <div className="brand-sub">Admin</div>
           </div>
         </div>
-        <a className="back-link" href="studio.html" style={{padding:'4px 8px'}}>← All artifacts</a>
+        <a className="back-link" href="index.html" style={{padding:'4px 8px'}}>← All artifacts</a>
         <div className="nav-group">Operate</div>
         <NavItem ico="dash" label="Dashboard" on={page==='dash'} onClick={()=>setPage('admin-dash')}/>
         <NavItem ico="content" label="Content" on={page==='content'} onClick={()=>setPage('admin-content')} badge="3"/>
@@ -358,7 +358,7 @@ function PlansPage({setPage}){
     <div className="shell">
       <main className="main">
         <div className="topbar">
-          <a className="back-link" href="studio.html">← All artifacts</a>
+          <a className="back-link" href="index.html">← All artifacts</a>
           <div className="crumbs" style={{marginLeft:14}}>FortuneGate <span style={{margin:'0 6px'}}>/</span> <b>Pricing</b></div>
           <span style={{flex:1}}/>
           <button className="btn btn-ghost" onClick={()=>setPage('admin-dash')}>Admin →</button>

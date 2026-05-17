@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claim your reward — FortuneGate</title>
+<meta name="description" content="Verify your details and claim your FortuneGate giveaway or referral payout." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="fg-public.css" />
+
+<style>
+  /* claim layout */
+  .claim-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+  @media (max-width:960px){.claim-grid{grid-template-columns:1fr;gap:32px}}
+
+  /* form card */
+  .form-card{padding:32px;display:flex;flex-direction:column;gap:24px}
+  @media (max-width:520px){.form-card{padding:24px}}
+
+  .progress{display:flex;gap:8px;margin-bottom:8px}
+  .pstep{flex:1;height:5px;border-radius:3px;background:rgba(212,160,23,.10)}
+  .pstep.on{background:linear-gradient(90deg,var(--fg-gold-500),var(--fg-gold-300));box-shadow:0 0 12px rgba(212,160,23,.4)}
+
+  .form-h h2{font-family:var(--font-display);font-weight:700;font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+  .form-h .sub{font-size:14px;color:var(--fg-text-mid);line-height:1.5}
+
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-text-lo)}
+  .field .req{color:var(--fg-gold-500)}
+  .input,.select{
+    width:100%;background:rgba(10,14,11,.6);border:1px solid var(--fg-border);border-radius:var(--r-md);
+    padding:14px 16px;color:var(--fg-text-hi);font-family:var(--font-body);font-size:15px;outline:none;
+    transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .input:focus,.select:focus{border-color:var(--fg-gold-500);box-shadow:0 0 0 3px rgba(212,160,23,.15)}
+  .input::placeholder{color:var(--fg-text-lo)}
+  .field .hint{font-size:12px;color:var(--fg-text-lo);margin-top:2px}
+  .field .err{font-size:12px;color:var(--fg-danger);font-weight:500;margin-top:2px;display:none}
+  .field.invalid .input{border-color:var(--fg-danger)}
+  .field.invalid .err{display:block}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:520px){.row-2{grid-template-columns:1fr}}
+
+  .phone-input{display:flex;background:rgba(10,14,11,.6);border:1px solid var(--fg-border);border-radius:var(--r-md);overflow:hidden;transition:.15s}
+  .phone-input:focus-within{border-color:var(--fg-gold-500);box-shadow:0 0 0 3px rgba(212,160,23,.15)}
+  .phone-input .cc{padding:14px 14px 14px 16px;font-family:var(--font-display);font-weight:600;color:var(--fg-text-hi);border-right:1px solid var(--fg-border)}
+  .phone-input input{flex:1;background:transparent;border:none;padding:14px 16px;color:var(--fg-text-hi);font-family:var(--font-body);font-size:15px;outline:none}
+
+  /* OTP boxes */
+  .otp{display:flex;gap:8px;justify-content:space-between}
+  .otp input{flex:1;aspect-ratio:1;text-align:center;font-family:var(--font-display);font-weight:700;font-size:22px;background:rgba(10,14,11,.6);border:1px solid var(--fg-border);color:var(--fg-text-hi);border-radius:var(--r-md);transition:.15s}
+  .otp input:focus{outline:none;border-color:var(--fg-gold-500);box-shadow:0 0 0 3px rgba(212,160,23,.15)}
+
+  /* payout method radios */
+  .methods{display:flex;flex-direction:column;gap:10px}
+  .method{display:flex;align-items:center;gap:14px;padding:16px 18px;background:rgba(10,14,11,.45);border:1px solid var(--fg-border);border-radius:var(--r-md);cursor:pointer;transition:.15s}
+  .method:hover{border-color:var(--fg-border-hi)}
+  .method.on{border-color:var(--fg-gold-500);background:rgba(212,160,23,.08);box-shadow:0 0 24px rgba(212,160,23,.15)}
+  .method .icn{width:40px;height:40px;border-radius:10px;background:rgba(212,160,23,.10);border:1px solid var(--fg-border-hi);color:var(--fg-gold-300);display:flex;align-items:center;justify-content:center;flex:none}
+  .method .body{flex:1}
+  .method .name{font-family:var(--font-display);font-weight:600;font-size:15px}
+  .method .desc{font-size:12.5px;color:var(--fg-text-mid);margin-top:2px}
+  .method .dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--fg-text-lo);transition:.15s;flex:none}
+  .method.on .dot{border-color:var(--fg-gold-500);background:radial-gradient(circle at center,var(--fg-gold-500) 0 5px,transparent 5px)}
+
+  .agree{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:rgba(212,160,23,.06);border:1px solid var(--fg-border);border-radius:var(--r-md)}
+  .agree input{margin-top:2px;width:18px;height:18px;flex:none;accent-color:var(--fg-gold-500)}
+  .agree label{font-size:13px;color:var(--fg-text-mid);line-height:1.55;cursor:pointer}
+  .agree a{color:var(--fg-gold-300);text-decoration:underline;text-underline-offset:2px}
+
+  .action-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-top:8px;border-top:1px solid var(--fg-border);margin-top:8px;padding-top:24px}
+  .action-row .helper{font-size:12px;color:var(--fg-text-lo)}
+  .action-row .helper b{color:var(--fg-text-mid)}
+
+  /* sidebar */
+  .side{display:flex;flex-direction:column;gap:18px;position:sticky;top:90px}
+  @media (max-width:960px){.side{position:relative;top:0}}
+  .prize-card{padding:24px;position:relative;overflow:hidden}
+  .prize-card .live{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;color:var(--fg-gold-300);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .prize-card .live::before{content:'';width:7px;height:7px;border-radius:50%;background:#43A047;box-shadow:0 0 0 0 rgba(67,160,71,.6);animation:pulse 1.6s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(67,160,71,.6)}70%{box-shadow:0 0 0 8px rgba(67,160,71,0)}100%{box-shadow:0 0 0 0 rgba(67,160,71,0)}}
+  .prize-card h3{font-family:var(--font-display);font-weight:700;font-size:20px;margin:0 0 6px;letter-spacing:-.01em}
+  .prize-card .when{font-size:12px;color:var(--fg-text-mid);margin-bottom:14px}
+  .prize-card .img{aspect-ratio:16/10;margin-bottom:16px}
+  .prize-card .v{font-family:var(--font-display);font-weight:700;font-size:30px;color:var(--fg-gold-300);letter-spacing:-.015em;line-height:1;font-variant-numeric:tabular-nums}
+  .prize-card .vk{font-size:11px;color:var(--fg-text-lo);letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-top:6px}
+
+  .warn{padding:18px;display:flex;gap:12px;align-items:flex-start;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.32);border-radius:var(--r-md)}
+  .warn .icn{width:32px;height:32px;border-radius:8px;background:rgba(220,38,38,.18);color:#ff7a7a;display:flex;align-items:center;justify-content:center;flex:none}
+  .warn .body h4{font-family:var(--font-display);font-weight:700;font-size:13px;margin:0 0 4px;color:#ff9b9b;letter-spacing:.04em}
+  .warn .body p{margin:0;font-size:12.5px;color:var(--fg-text-mid);line-height:1.5}
+  .warn .body b{color:#ff9b9b}
+
+  .stage{display:none}
+  .stage.on{display:flex;flex-direction:column;gap:24px;animation:fade .25s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .done-card{padding:48px;text-align:center}
+  .done-card .check{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--fg-green-700),var(--fg-green-500));margin:0 auto 24px;display:flex;align-items:center;justify-content:center;color:#0A0E0B;box-shadow:0 0 48px rgba(67,160,71,.4)}
+  .done-card h2{font-family:var(--font-display);font-weight:700;font-size:32px;margin:0 0 12px;letter-spacing:-.015em}
+  .done-card p{color:var(--fg-text-mid);font-size:15px;line-height:1.6;max-width:480px;margin:0 auto 24px}
+  .done-card .ref{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r-pill);background:rgba(212,160,23,.08);border:1px solid var(--fg-border-hi);font-family:'JetBrains Mono','SF Mono',ui-monospace,monospace;font-size:13px;color:var(--fg-gold-300);margin-bottom:24px}
+</style>
+
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap inner">
+    <a href="homepage.html" class="brand"><span class="l">F</span><span>FortuneGate</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="how-to.html">How To</a>
+      <a href="claim.html" class="on">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+    </nav>
+    <div class="auth">
+      <a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a>
+      <a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a>
+      <button class="mobile-toggle" aria-label="Open menu" onclick="document.getElementById('mobMenu').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mobMenu">
+    <div class="wrap">
+      <a href="about.html">About</a>
+      <a href="how-to.html">How To</a>
+      <a href="claim.html">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+      <div class="auth-row"><a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a><a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a></div>
+    </div>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="homepage.html">Home</a><span class="sep">/</span>Claim Reward</div>
+    <h1>Claim your <em>reward</em>.</h1>
+    <p class="lead">If you've been notified that you won a giveaway or have referral earnings to withdraw, this is where you confirm your details. We verify, then pay out within 48 hours.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="claim-grid">
+
+      <!-- Form -->
+      <div>
+        <div class="form-card glass-gold" id="formCard">
+
+          <!-- Progress -->
+          <div>
+            <div class="progress">
+              <div class="pstep on" id="p1"></div>
+              <div class="pstep" id="p2"></div>
+              <div class="pstep" id="p3"></div>
+            </div>
+            <div class="overline" id="stepLabel">Step 1 of 3 · Verify your phone</div>
+          </div>
+
+          <!-- Stage 1: phone + OTP -->
+          <div class="stage on" id="stage1">
+            <div class="form-h">
+              <h2>Verify your phone</h2>
+              <div class="sub">We'll text a 6-digit code to the phone you registered with. This is the same number we'll pay out to.</div>
+            </div>
+
+            <div class="field">
+              <label>Phone number <span class="req">*</span></label>
+              <div class="phone-input">
+                <span class="cc">+234</span>
+                <input type="tel" placeholder="803 442 1199" id="phoneIn" />
+              </div>
+              <div class="hint">Use the exact phone you signed up with.</div>
+            </div>
+
+            <div class="field" id="otpField" style="display:none">
+              <label>Verification code <span class="req">*</span></label>
+              <div class="otp" id="otpInputs">
+                <input maxlength="1" inputmode="numeric" />
+                <input maxlength="1" inputmode="numeric" />
+                <input maxlength="1" inputmode="numeric" />
+                <input maxlength="1" inputmode="numeric" />
+                <input maxlength="1" inputmode="numeric" />
+                <input maxlength="1" inputmode="numeric" />
+              </div>
+              <div class="hint">Code expires in 10 minutes. <a href="#" style="color:var(--fg-gold-300)">Resend</a></div>
+            </div>
+
+            <div class="action-row">
+              <div class="helper">By continuing you agree to our <a href="#" style="color:var(--fg-gold-300)">verification policy</a>.</div>
+              <button class="btn btn-primary" id="next1">Send code →</button>
+            </div>
+          </div>
+
+          <!-- Stage 2: reward type + payout method + details -->
+          <div class="stage" id="stage2">
+            <div class="form-h">
+              <h2>Where should we send it?</h2>
+              <div class="sub">For cash payouts the bank account name must match the name on your FortuneGate account.</div>
+            </div>
+
+            <div class="field">
+              <label>What are you claiming? <span class="req">*</span></label>
+              <select class="select" id="rewardType">
+                <option value="giveaway">Giveaway prize (cash or physical)</option>
+                <option value="referral">Referral payout</option>
+                <option value="winnings">Past winnings (not yet claimed)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Payout method <span class="req">*</span></label>
+              <div class="methods">
+                <div class="method on" data-method="bank">
+                  <div class="icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                  <div class="body"><div class="name">Bank transfer</div><div class="desc">NIBSS · settles in 48 hours · no fees</div></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="method" data-method="ussd">
+                  <div class="icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+                  <div class="body"><div class="name">Mobile money</div><div class="desc">Direct to your phone wallet</div></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="method" data-method="ship">
+                  <div class="icn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+                  <div class="body"><div class="name">Ship physical prize</div><div class="desc">For phones, laptops, etc. GIG / DHL</div></div>
+                  <div class="dot"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bank fields (default) -->
+            <div id="bankFields" class="stage on" style="display:flex;flex-direction:column;gap:14px;animation:none">
+              <div class="row-2">
+                <div class="field">
+                  <label>Bank <span class="req">*</span></label>
+                  <select class="select">
+                    <option>Access Bank</option>
+                    <option>GTBank</option>
+                    <option>UBA</option>
+                    <option>Zenith Bank</option>
+                    <option>First Bank</option>
+                    <option>Fidelity Bank</option>
+                    <option>Stanbic IBTC</option>
+                    <option>Sterling Bank</option>
+                    <option>Union Bank</option>
+                    <option>Wema Bank</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Account number <span class="req">*</span></label>
+                  <input class="input" type="text" inputmode="numeric" maxlength="10" placeholder="0123456789" />
+                </div>
+              </div>
+              <div class="field">
+                <label>Account name <span class="req">*</span></label>
+                <input class="input" type="text" placeholder="Auto-filled when account number is verified" />
+                <div class="hint">Must match the name on your FortuneGate account: <b style="color:var(--fg-text-mid)">Tunde Adesina</b></div>
+              </div>
+            </div>
+
+            <!-- Shipping fields (hidden) -->
+            <div id="shipFields" style="display:none;flex-direction:column;gap:14px">
+              <div class="field">
+                <label>Delivery address <span class="req">*</span></label>
+                <input class="input" type="text" placeholder="House no, street, area" />
+              </div>
+              <div class="row-2">
+                <div class="field">
+                  <label>City <span class="req">*</span></label>
+                  <input class="input" type="text" placeholder="Lagos" />
+                </div>
+                <div class="field">
+                  <label>State <span class="req">*</span></label>
+                  <select class="select">
+                    <option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option><option>Oyo</option><option>Kano</option><option>Kaduna</option><option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label>Backup contact phone</label>
+                <div class="phone-input">
+                  <span class="cc">+234</span>
+                  <input type="tel" placeholder="803 442 1199" />
+                </div>
+                <div class="hint">Someone the courier can reach if you're unavailable.</div>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button class="btn btn-ghost" onclick="goStage(1)">← Back</button>
+              <button class="btn btn-primary" id="next2">Review &amp; submit →</button>
+            </div>
+          </div>
+
+          <!-- Stage 3: review + agree + submit -->
+          <div class="stage" id="stage3">
+            <div class="form-h">
+              <h2>Review and submit</h2>
+              <div class="sub">Last check before we kick off the verification team.</div>
+            </div>
+
+            <div class="glass" style="padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px">
+                <span class="lo">Phone</span><span style="font-family:var(--font-display);font-weight:600">+234 803 ••• 4421</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;padding-top:12px;border-top:1px solid var(--fg-border)">
+                <span class="lo">Reward type</span><span style="font-family:var(--font-display);font-weight:600">May 2026 giveaway · iPhone 16 Pro</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;padding-top:12px;border-top:1px solid var(--fg-border)">
+                <span class="lo">Payout method</span><span style="font-family:var(--font-display);font-weight:600" id="reviewMethod">Bank transfer</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;padding-top:12px;border-top:1px solid var(--fg-border)">
+                <span class="lo">Estimated value</span><span class="num" style="color:var(--fg-gold-300);font-size:18px">₦1,850,000</span>
+              </div>
+            </div>
+
+            <div class="agree">
+              <input type="checkbox" id="agree1" />
+              <label for="agree1">I confirm the information above is accurate and matches my FortuneGate registration. I understand FortuneGate will <b style="color:var(--fg-text-hi)">never</b> ask me to pay processing fees or share my bank PIN to claim a reward.</label>
+            </div>
+
+            <div class="action-row">
+              <button class="btn btn-ghost" onclick="goStage(2)">← Back</button>
+              <button class="btn btn-gold" id="submitBtn">Submit claim →</button>
+            </div>
+          </div>
+
+          <!-- Stage 4: success -->
+          <div class="stage" id="stage4">
+            <div class="done-card">
+              <div class="check"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <h2>Claim submitted.</h2>
+              <p>Our verification team will call you at <b style="color:var(--fg-text-hi)">+234 803 ••• 4421</b> within 24 hours from <b style="color:var(--fg-text-hi)">+234 800 000 0000</b>. Once verified, payout lands in your bank within 48 hours.</p>
+              <div class="ref">Reference · FG-CLM-58291</div>
+              <div class="row" style="gap:10px;justify-content:center">
+                <a class="btn btn-gold" href="homepage.html">Back to home</a>
+                <a class="btn btn-ghost" href="how-to.html#rewards">What happens next?</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="side">
+
+        <div class="prize-card glass-gold">
+          <span class="live">Your prize · live giveaway</span>
+          <h3>iPhone 16 Pro · 256 GB</h3>
+          <div class="when">Drawn 14 May 2026 · Reference FG-MAY-26</div>
+          <div class="img img-ph" data-label="prize photo · 16:10"></div>
+          <div class="v">₦1,850,000</div>
+          <div class="vk">Prize value</div>
+        </div>
+
+        <div class="warn">
+          <div class="icn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="body">
+            <h4>Scam warning</h4>
+            <p>We <b>never</b> ask for processing fees, bank PINs, or to "activate" a prize. Every official FortuneGate call comes from <b>+234 800 000 0000</b>. Anything else is a scam — please report it.</p>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:18px 20px">
+          <div class="overline" style="margin-bottom:10px">Need help?</div>
+          <p style="font-size:13px;color:var(--fg-text-mid);margin:0 0 14px;line-height:1.55">If you've lost access to your registered phone, email us from the email on your account.</p>
+          <div class="row" style="gap:8px;flex-wrap:wrap">
+            <a class="btn btn-ghost btn-sm" href="mailto:hello@fortunegate.ng">Email support</a>
+            <a class="btn btn-ghost btn-sm" href="how-to.html#rewards">Read the guide</a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-col ft-about">
+        <div class="brand"><span class="l">F</span><span>FortuneGate</span></div>
+        <p>Bridging the knowledge and capital gap for African entrepreneurs. Built in Lagos, for the next 10 million.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.66a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.09z"/></svg></a>
+          <a href="#" aria-label="X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Platform</h4><ul><li><a href="homepage.html#content">Content library</a></li><li><a href="homepage.html#plans">Premium services</a></li><li><a href="homepage.html#earn">Referral programme</a></li><li><a href="homepage.html#live">Live events</a></li><li><a href="homepage.html#winners">Winners</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="how-to.html">How it works</a></li><li><a href="claim.html">Claim reward</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Terms of service</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Giveaway rules</a></li><li><a href="#">Refund policy</a></li><li><a href="#">NDPR notice</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 FortuneGate · Lagos, Nigeria · RC 7842-NG</span>
+      <span><a href="index.html">Design studio</a><a href="#">Status</a><a href="#">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Stage progression
+  const stages = [1,2,3,4];
+  const stepLabels = {1:'Step 1 of 3 · Verify your phone', 2:'Step 2 of 3 · Where should we send it?', 3:'Step 3 of 3 · Review and submit', 4:'Claim submitted'};
+  function goStage(n){
+    stages.forEach(i => document.getElementById('stage'+i).classList.toggle('on', i === n));
+    document.getElementById('stepLabel').textContent = stepLabels[n] || '';
+    document.getElementById('p1').classList.toggle('on', n >= 1);
+    document.getElementById('p2').classList.toggle('on', n >= 2);
+    document.getElementById('p3').classList.toggle('on', n >= 3);
+  }
+
+  // OTP flow toggle on stage 1
+  document.getElementById('next1').addEventListener('click', () => {
+    const phone = document.getElementById('phoneIn').value.trim();
+    const otpField = document.getElementById('otpField');
+    if (otpField.style.display === 'none' || !otpField.style.display) {
+      // first click: send code
+      otpField.style.display = 'flex';
+      otpField.style.flexDirection = 'column';
+      otpField.style.gap = '6px';
+      document.getElementById('next1').textContent = 'Continue →';
+      document.querySelectorAll('#otpInputs input')[0]?.focus();
+    } else {
+      goStage(2);
+    }
+  });
+  document.getElementById('next2').addEventListener('click', () => goStage(3));
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    if (!document.getElementById('agree1').checked) {
+      document.getElementById('agree1').focus();
+      return;
+    }
+    goStage(4);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  // OTP autofocus next
+  document.querySelectorAll('#otpInputs input').forEach((inp, i, all) => {
+    inp.addEventListener('input', () => {
+      if (inp.value && all[i+1]) all[i+1].focus();
+    });
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !inp.value && all[i-1]) all[i-1].focus();
+    });
+  });
+
+  // Payout method toggle
+  document.querySelectorAll('.method').forEach(m => {
+    m.addEventListener('click', () => {
+      document.querySelectorAll('.method').forEach(x => x.classList.remove('on'));
+      m.classList.add('on');
+      const method = m.dataset.method;
+      document.getElementById('bankFields').style.display = method === 'ship' ? 'none' : 'flex';
+      document.getElementById('shipFields').style.display = method === 'ship' ? 'flex' : 'none';
+      const reviewMethod = {bank:'Bank transfer · NIBSS', ussd:'Mobile money', ship:'Physical shipping'}[method];
+      const r = document.getElementById('reviewMethod');
+      if (r) r.textContent = reviewMethod;
+    });
+  });
+
+  document.querySelectorAll('.mob-menu a').forEach(a => a.addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open')));
+</script>
+
+</body>
+</html>

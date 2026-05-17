@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — FortuneGate</title>
+<meta name="description" content="Why we built FortuneGate — bridging the knowledge and capital gap facing African entrepreneurs." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="fg-public.css" />
+
+<style>
+  /* page-specific */
+  .mission{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start}
+  @media (max-width:880px){.mission{grid-template-columns:1fr;gap:36px}}
+  .mission h2{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0 0 18px}
+  .mission p{color:var(--fg-text-mid);font-size:16px;line-height:1.7;margin:0 0 18px}
+  .mission p:last-child{margin-bottom:0}
+  .stat-stack{display:flex;flex-direction:column;gap:14px}
+  .stat-stack .glass{padding:22px}
+  .stat-stack .v{font-family:var(--font-display);font-weight:700;font-size:32px;color:var(--fg-gold-300);font-variant-numeric:tabular-nums;letter-spacing:-.015em;line-height:1}
+  .stat-stack .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-text-lo);font-weight:600;margin-top:8px}
+  .stat-stack .sub{color:var(--fg-text-mid);font-size:13px;margin-top:8px;line-height:1.5}
+
+  .audiences{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:880px){.audiences{grid-template-columns:1fr}}
+  .aud{padding:24px;display:flex;flex-direction:column;gap:10px}
+  .aud .age{font-family:var(--font-display);font-weight:700;font-size:32px;color:var(--fg-gold-300);letter-spacing:-.015em;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:6px}
+  .aud h3{font-family:var(--font-display);font-weight:700;font-size:18px;margin:0;letter-spacing:-.01em}
+  .aud p{color:var(--fg-text-mid);font-size:14px;line-height:1.6;margin:0;flex:1}
+  .aud .tags{display:flex;gap:6px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--fg-border)}
+  .aud .tag{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(212,160,23,.08);border:1px solid var(--fg-border);color:var(--fg-text-mid);letter-spacing:.06em;text-transform:uppercase}
+
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:720px){.pillars{grid-template-columns:1fr}}
+  .pillar{padding:28px;display:flex;flex-direction:column;gap:14px}
+  .pillar .ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(212,160,23,.08);border:1px solid var(--fg-border-hi);color:var(--fg-gold-300)}
+  .pillar h3{font-family:var(--font-display);font-weight:700;font-size:22px;margin:0;letter-spacing:-.01em}
+  .pillar p{color:var(--fg-text-mid);font-size:14.5px;line-height:1.65;margin:0}
+
+  .timeline{display:flex;flex-direction:column;gap:0;position:relative;margin-top:36px}
+  .timeline::before{content:'';position:absolute;left:23px;top:8px;bottom:8px;width:1.5px;background:linear-gradient(180deg,var(--fg-gold-500),transparent)}
+  .ts{display:flex;gap:24px;padding:14px 0;position:relative}
+  .ts .dot{width:48px;height:48px;border-radius:50%;background:rgba(212,160,23,.12);border:1.5px solid var(--fg-border-hi);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:var(--fg-gold-300);font-size:13px;flex:none;z-index:1;background-clip:padding-box}
+  .ts.done .dot{background:linear-gradient(135deg,var(--fg-gold-500),var(--fg-gold-700));color:#0A0E0B;border-color:var(--fg-gold-500)}
+  .ts .body h4{font-family:var(--font-display);font-weight:700;font-size:16px;margin:0 0 4px;letter-spacing:-.005em}
+  .ts .body .when{font-size:11px;color:var(--fg-gold-300);letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+  .ts .body p{color:var(--fg-text-mid);font-size:14px;line-height:1.55;margin:0;max-width:560px}
+
+  .contact{padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media (max-width:720px){.contact{grid-template-columns:1fr;padding:32px;gap:32px}}
+  .contact h2{font-family:var(--font-display);font-weight:700;font-size:32px;line-height:1.1;margin:0 0 14px;letter-spacing:-.015em}
+  .contact p{color:var(--fg-text-mid);font-size:15px;line-height:1.65;margin:0 0 22px}
+  .ch-list{display:flex;flex-direction:column;gap:12px}
+  .ch{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(10,14,11,.55);border:1px solid var(--fg-border);border-radius:var(--r-md);transition:.15s}
+  .ch:hover{border-color:var(--fg-border-hi);transform:translateY(-1px)}
+  .ch .ico{width:36px;height:36px;border-radius:10px;background:rgba(212,160,23,.10);border:1px solid var(--fg-border-hi);color:var(--fg-gold-300);display:flex;align-items:center;justify-content:center;flex:none}
+  .ch .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-text-lo);font-weight:600}
+  .ch .v{font-family:var(--font-display);font-weight:600;font-size:15px;margin-top:2px;color:var(--fg-text-hi)}
+</style>
+
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap inner">
+    <a href="homepage.html" class="brand"><span class="l">F</span><span>FortuneGate</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="about.html" class="on">About</a>
+      <a href="how-to.html">How To</a>
+      <a href="claim.html">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+    </nav>
+    <div class="auth">
+      <a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a>
+      <a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a>
+      <button class="mobile-toggle" aria-label="Open menu" onclick="document.getElementById('mobMenu').classList.toggle('open')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mobMenu">
+    <div class="wrap">
+      <a href="about.html">About</a>
+      <a href="how-to.html">How To</a>
+      <a href="claim.html">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+      <div class="auth-row">
+        <a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a>
+        <a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page head -->
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="homepage.html">Home</a><span class="sep">/</span>About</div>
+    <h1>Why we built <em>FortuneGate</em>.</h1>
+    <p class="lead">Across Africa, too many promising businesses fail not from lack of ambition — but from avoidable mistakes and locked-out capital. We're here to close both gaps at once.</p>
+  </div>
+</section>
+
+<!-- Mission -->
+<section>
+  <div class="wrap">
+    <div class="mission">
+      <div>
+        <div class="overline">Our mission</div>
+        <h2>Bridge the knowledge and capital gap for African entrepreneurs.</h2>
+        <p>In today's climate of rising costs and persistent inflation, the businesses that survive are the ones that compound small advantages — practical knowledge, healthy habits, and access to capital when it matters.</p>
+        <p>FortuneGate combines all three. We deliver actionable content across business, growth, life hacks and health. We pair it with a monthly giveaway funded by subscriptions, and a transparent referral programme that pays real Naira. The result is a single platform that strengthens both the business and the person behind it.</p>
+        <p>This isn't another newsletter. It's the gate to fortune — and we want as many people through it as possible.</p>
+      </div>
+      <div class="stat-stack">
+        <div class="glass-gold">
+          <div class="v">10M</div>
+          <div class="k">subscriptions · year-1 target</div>
+          <div class="sub">Audacious, intentional — Nigeria first, then the continent.</div>
+        </div>
+        <div class="glass">
+          <div class="v">₦12.4M</div>
+          <div class="k">paid out so far</div>
+          <div class="sub">Giveaways &amp; referral payouts. Every transaction is publicly logged.</div>
+        </div>
+        <div class="glass">
+          <div class="v">3 G</div>
+          <div class="k">optimised</div>
+          <div class="sub">We design for the network most of our users actually have.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Who it's for -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l">
+        <div class="overline">Audience</div>
+        <h2>Who FortuneGate is for.</h2>
+        <p>From students starting their first hustle to operators preparing for retirement — three life stages, one platform.</p>
+      </div>
+    </div>
+
+    <div class="audiences">
+      <div class="aud glass">
+        <div class="age">18–25</div>
+        <h3>Students &amp; aspiring founders</h3>
+        <p>Sensitive about health, dreaming of business. Need affordable wellness, structured guidance, and seed capital to get started.</p>
+        <div class="tags"><span class="tag">Health</span><span class="tag">First business</span><span class="tag">Mentorship</span></div>
+      </div>
+      <div class="aud glass-gold">
+        <div class="age">26–45</div>
+        <h3>Operators in their prime</h3>
+        <p>Productive years. Already running businesses but blocked by capital. Need playbooks to scale and access to funds to expand stock and meet demand.</p>
+        <div class="tags"><span class="tag">Scale</span><span class="tag">Capital</span><span class="tag">Distribution</span></div>
+      </div>
+      <div class="aud glass">
+        <div class="age">46–60</div>
+        <h3>Retirement runway</h3>
+        <p>Approaching the end of a career. Need cushion funds and practical advice to sustain quality of life after the salary stops.</p>
+        <div class="tags"><span class="tag">Cushion</span><span class="tag">Wellness</span><span class="tag">Second income</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What we offer -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l">
+        <div class="overline">Four pillars</div>
+        <h2>What you get from the gate.</h2>
+        <p>Each library is curated by operators who built in Nigeria first — not consultants importing playbooks that don't translate.</p>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg></div>
+        <h3>Business &amp; Growth</h3>
+        <p>Cash flow planning, hiring, distribution, fundraising — tested playbooks for moving past the first ₦1M and beyond. Case studies from operators you actually want to learn from.</p>
+      </div>
+      <div class="pillar glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Health &amp; Fitness</h3>
+        <p>Wellness for the real Nigerian week — affordable nutrition, gym routines that fit a 70-hour schedule, sleep, recovery and mental clarity. No imported supplement-stack fantasies.</p>
+      </div>
+      <div class="pillar glass">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Life Hacks</h3>
+        <p>Daily shortcuts that compound — productivity, money, relationships, energy. Short reads you'll actually use this week, not 5,000-word essays.</p>
+      </div>
+      <div class="pillar glass-gold">
+        <div class="ico" style="background:rgba(46,125,50,.12);border-color:rgba(67,160,71,.3);color:var(--fg-green-300)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l2 2 6-6"/></svg></div>
+        <h3>Giveaways &amp; Referrals</h3>
+        <p>Every purchase is also a chance. Premium gets 5× entries, Elite gets 15×. Refer friends for ₦100 + ₦50 per renewal, paid out monthly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l">
+        <div class="overline">Roadmap</div>
+        <h2>Where we are, and what's next.</h2>
+        <p>We move in months, not quarters. Every milestone has a public draw or payout attached so progress is visible.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="ts done">
+        <div class="dot">✓</div>
+        <div class="body">
+          <div class="when">Feb 2026 · Shipped</div>
+          <h4>Beta launch · 1,000 founding subscribers</h4>
+          <p>Closed beta with curated cohort. First giveaway: MacBook Air, drawn live on Instagram with verified payout receipts published.</p>
+        </div>
+      </div>
+      <div class="ts done">
+        <div class="dot">✓</div>
+        <div class="body">
+          <div class="when">Apr 2026 · Shipped</div>
+          <h4>Public launch · 4 content libraries open</h4>
+          <p>All four libraries (Business, Growth, Health, Life Hacks) opened. Referral programme switched on. ₦8M paid out to early referrers.</p>
+        </div>
+      </div>
+      <div class="ts">
+        <div class="dot">3</div>
+        <div class="body">
+          <div class="when">May 2026 · You are here</div>
+          <h4>Mobile app · iPhone &amp; Android beta</h4>
+          <p>Phone-first experience with offline reading and SMS-based payouts to your registered phone number.</p>
+        </div>
+      </div>
+      <div class="ts">
+        <div class="dot">4</div>
+        <div class="body">
+          <div class="when">Q3 2026</div>
+          <h4>Ghana + Kenya expansion</h4>
+          <p>Multi-currency support, local-context content tracks, regional draws. Sign up for the waitlist on the homepage.</p>
+        </div>
+      </div>
+      <div class="ts">
+        <div class="dot">5</div>
+        <div class="body">
+          <div class="when">2027</div>
+          <h4>10M subscriptions · pan-African platform</h4>
+          <p>The audacious goal that started it all. Continent-wide content, regional payouts, partner giveaways with real African brands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="glass-gold contact">
+      <div>
+        <div class="overline">Talk to us</div>
+        <h2>Press, partnerships, or just to say hi.</h2>
+        <p>We answer fast. If you've got an SME with a real story we should tell, or a brand that wants to sponsor a giveaway — start here.</p>
+        <div class="row" style="gap:10px">
+          <a class="btn btn-gold" href="mailto:hello@fortunegate.ng">Email us →</a>
+          <a class="btn btn-ghost" href="how-to.html">How it works</a>
+        </div>
+      </div>
+      <div class="ch-list">
+        <a class="ch" href="mailto:hello@fortunegate.ng">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <div><div class="k">General</div><div class="v">hello@fortunegate.ng</div></div>
+        </a>
+        <a class="ch" href="mailto:press@fortunegate.ng">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-1V4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/></svg></span>
+          <div><div class="k">Press &amp; partnerships</div><div class="v">press@fortunegate.ng</div></div>
+        </a>
+        <a class="ch" href="tel:+2348000000000">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div><div class="k">Phone · 9am–5pm WAT</div><div class="v">+234 800 000 0000</div></div>
+        </a>
+        <div class="ch">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><div class="k">Office</div><div class="v">Lekki Phase 1 · Lagos</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-col ft-about">
+        <div class="brand"><span class="l">F</span><span>FortuneGate</span></div>
+        <p>Bridging the knowledge and capital gap for African entrepreneurs. Built in Lagos, for the next 10 million.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.66a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.09z"/></svg></a>
+          <a href="#" aria-label="X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Platform</h4><ul><li><a href="homepage.html#content">Content library</a></li><li><a href="homepage.html#plans">Premium services</a></li><li><a href="homepage.html#earn">Referral programme</a></li><li><a href="homepage.html#live">Live events</a></li><li><a href="homepage.html#winners">Winners</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="how-to.html">How it works</a></li><li><a href="claim.html">Claim reward</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Terms of service</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Giveaway rules</a></li><li><a href="#">Refund policy</a></li><li><a href="#">NDPR notice</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 FortuneGate · Lagos, Nigeria · RC 7842-NG</span>
+      <span><a href="index.html">Design studio</a><a href="#">Status</a><a href="#">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>document.querySelectorAll('.mob-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobMenu').classList.remove('open')));</script>
+
+</body>
+</html>

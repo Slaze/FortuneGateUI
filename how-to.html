@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How it works — FortuneGate</title>
+<meta name="description" content="Step-by-step: how to register, pay, claim a reward, and earn from referrals on FortuneGate." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="fg-public.css" />
+
+<style>
+  /* sticky in-page nav */
+  .ht-grid{display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
+  @media (max-width:880px){.ht-grid{grid-template-columns:1fr;gap:24px}}
+  .ht-nav{position:sticky;top:90px;background:rgba(17,24,28,.55);border:1px solid var(--fg-border);border-radius:var(--r-lg);padding:14px}
+  @media (max-width:880px){.ht-nav{position:relative;top:0}}
+  .ht-nav h4{font-family:var(--font-display);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-text-lo);margin:0 0 10px;padding:0 8px}
+  .ht-nav ol{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px}
+  .ht-nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--fg-text-mid);transition:.15s}
+  .ht-nav a:hover{background:rgba(212,160,23,.06);color:var(--fg-text-hi)}
+  .ht-nav a.on{background:rgba(212,160,23,.12);color:var(--fg-gold-300);font-weight:600}
+  .ht-nav a .n{font-family:var(--font-display);font-weight:600;font-size:11px;color:var(--fg-gold-300);width:20px;flex:none}
+
+  .ht-section{padding:0 0 64px;scroll-margin-top:90px}
+  .ht-section + .ht-section{border-top:1px solid var(--fg-border);padding-top:64px}
+  .ht-section h2{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,3.6vw,38px);line-height:1.1;letter-spacing:-.02em;margin:0 0 12px}
+  .ht-section .lead{color:var(--fg-text-mid);font-size:16px;line-height:1.65;max-width:680px;margin:0 0 36px}
+
+  .steps{display:flex;flex-direction:column;gap:18px;margin-bottom:24px}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:24px;padding:24px;align-items:start}
+  @media (max-width:520px){.step{grid-template-columns:1fr;gap:14px}}
+  .step .badge{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,rgba(212,160,23,.18),rgba(46,125,50,.12));border:1px solid var(--fg-border-hi);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:var(--fg-gold-300);font-size:16px}
+  .step h3{font-family:var(--font-display);font-weight:700;font-size:19px;margin:4px 0 8px;letter-spacing:-.01em}
+  .step p{color:var(--fg-text-mid);font-size:14.5px;line-height:1.65;margin:0 0 12px}
+  .step p:last-child{margin-bottom:0}
+  .step .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .step .meta .tag{font-size:10px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(212,160,23,.08);border:1px solid var(--fg-border);color:var(--fg-text-mid);letter-spacing:.06em;text-transform:uppercase}
+  .step .screenshot{margin-top:14px;aspect-ratio:16/9}
+
+  /* payment methods */
+  .pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media (max-width:720px){.pay-grid{grid-template-columns:1fr}}
+  .pm{padding:18px;display:flex;flex-direction:column;gap:8px}
+  .pm .top{display:flex;align-items:center;justify-content:space-between}
+  .pm .name{font-family:var(--font-display);font-weight:600;font-size:14px}
+  .pm .ok{font-size:10px;font-weight:700;color:var(--fg-green-300);letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px}
+  .pm .ok::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--fg-green-500)}
+  .pm .sub{font-size:12.5px;color:var(--fg-text-mid);line-height:1.5}
+  .pm .when{font-size:11px;color:var(--fg-text-lo);margin-top:6px;letter-spacing:.04em}
+
+  /* payout schedule table */
+  .schedule{border:1px solid var(--fg-border);border-radius:var(--r-lg);overflow:hidden;background:rgba(17,24,28,.45);margin-top:24px}
+  .schedule .rr{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;padding:14px 20px;align-items:center;border-bottom:1px solid var(--fg-border);font-size:13.5px}
+  .schedule .rr:last-child{border-bottom:none}
+  .schedule .rr.h{font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-text-lo);background:rgba(212,160,23,.04)}
+  .schedule .rr.h .v{color:var(--fg-text-lo)}
+  .schedule .v{font-family:var(--font-display);font-weight:600;color:var(--fg-gold-300);font-variant-numeric:tabular-nums}
+  @media (max-width:720px){.schedule .rr{grid-template-columns:1fr 1fr;gap:8px}}
+
+  /* CTA */
+  .cta-band{padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:center;margin-top:36px}
+  @media (max-width:720px){.cta-band{grid-template-columns:1fr;padding:32px}}
+  .cta-band h3{font-family:var(--font-display);font-weight:700;font-size:24px;margin:0 0 10px;letter-spacing:-.015em}
+  .cta-band p{color:var(--fg-text-mid);font-size:15px;margin:0 0 18px;line-height:1.55}
+
+  .callout{padding:18px 22px;border-left:3px solid var(--fg-gold-500);background:rgba(212,160,23,.06);border-radius:0 var(--r-md) var(--r-md) 0;margin:20px 0;font-size:14px;color:var(--fg-text-mid);line-height:1.55}
+  .callout b{color:var(--fg-gold-300);font-weight:600}
+</style>
+
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap inner">
+    <a href="homepage.html" class="brand"><span class="l">F</span><span>FortuneGate</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="how-to.html" class="on">How To</a>
+      <a href="claim.html">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+    </nav>
+    <div class="auth">
+      <a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a>
+      <a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a>
+      <button class="mobile-toggle" aria-label="Open menu" onclick="document.getElementById('mobMenu').classList.toggle('open')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mobMenu">
+    <div class="wrap">
+      <a href="about.html">About</a>
+      <a href="how-to.html">How To</a>
+      <a href="claim.html">Claim Reward</a>
+      <a href="homepage.html#plans">Premium</a>
+      <div class="auth-row"><a class="btn btn-ghost btn-sm" href="02-prototype.html">Login</a><a class="btn btn-gold btn-sm" href="02-prototype.html">Get started</a></div>
+    </div>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="homepage.html">Home</a><span class="sep">/</span>How it works</div>
+    <h1>How <em>FortuneGate</em> works, end to end.</h1>
+    <p class="lead">Four sections — sign-up, paying for content, claiming a reward, and earning from referrals. Every step has the exact form, button, and SMS message you'll actually see.</p>
+  </div>
+</section>
+
+<section style="padding-top:48px">
+  <div class="wrap">
+    <div class="ht-grid">
+
+      <!-- sticky nav -->
+      <aside class="ht-nav">
+        <h4>On this page</h4>
+        <ol>
+          <li><a href="#signup" class="on"><span class="n">01</span>Sign up &amp; verify</a></li>
+          <li><a href="#payments"><span class="n">02</span>Make a payment</a></li>
+          <li><a href="#rewards"><span class="n">03</span>Claim a reward</a></li>
+          <li><a href="#referrals"><span class="n">04</span>Earn from referrals</a></li>
+        </ol>
+      </aside>
+
+      <div>
+        <!-- 01 sign up -->
+        <article id="signup" class="ht-section">
+          <div class="overline">Section 01</div>
+          <h2>Sign up and verify your phone.</h2>
+          <p class="lead">Two short forms. We split account details from phone verification so a lost device never locks you out of your account permanently.</p>
+
+          <div class="steps">
+            <div class="step glass">
+              <span class="badge">1</span>
+              <div>
+                <h3>Fill in your details</h3>
+                <p>First name, surname, email, password (8+ characters), and the age confirmation checkbox. Referral code is optional — if a friend gave you one, this is where it goes.</p>
+                <div class="meta"><span class="tag">Required</span><span class="tag">~45 sec</span></div>
+                <div class="screenshot img-ph" data-label="screen · register step 1"></div>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">2</span>
+              <div>
+                <h3>Add your phone</h3>
+                <p>Enter your Nigerian phone number. This becomes both your login and the destination for any payouts you earn — so make sure it's reachable.</p>
+                <div class="meta"><span class="tag">Required</span><span class="tag">+234 prefix</span></div>
+                <div class="screenshot img-ph" data-label="screen · phone verify step 2"></div>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">3</span>
+              <div>
+                <h3>Enter your OTP</h3>
+                <p>We text you a 6-digit code. Type it in — most phones autofill from the SMS. If you don't receive it in 60 seconds you can resend or switch to email verification.</p>
+                <div class="meta"><span class="tag">SMS or email fallback</span></div>
+                <div class="screenshot img-ph" data-label="screen · otp entry"></div>
+              </div>
+            </div>
+            <div class="step glass-gold">
+              <span class="badge" style="background:linear-gradient(135deg,var(--fg-gold-500),var(--fg-gold-700));color:#0A0E0B;border-color:var(--fg-gold-500)">✓</span>
+              <div>
+                <h3>Pick your tier</h3>
+                <p>Free, Reader, Premium or Elite. You can change anytime — Premium and above unlock 5× and 15× giveaway entries automatically.</p>
+                <div class="meta"><span class="tag">Cancel anytime</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>What if I lose my phone?</b> Email us at <a href="mailto:hello@fortunegate.ng" style="color:var(--fg-gold-300)">hello@fortunegate.ng</a> from the email on your account. We re-verify identity then update your phone — payouts pause until that's done.
+          </div>
+        </article>
+
+        <!-- 02 payments -->
+        <article id="payments" class="ht-section">
+          <div class="overline">Section 02</div>
+          <h2>How to pay for content or Premium.</h2>
+          <p class="lead">We never store card details ourselves — payments go through Paystack &amp; Monnify, both PCI-DSS compliant. You'll get an SMS receipt within seconds.</p>
+
+          <div class="pay-grid">
+            <div class="pm glass">
+              <div class="top"><div class="name">Card</div><div class="ok">Instant</div></div>
+              <div class="sub">Visa, Verve, Mastercard. Saved securely by Paystack for one-tap renewal.</div>
+              <div class="when">Settles in 0s</div>
+            </div>
+            <div class="pm glass">
+              <div class="top"><div class="name">Bank transfer</div><div class="ok">Same-day</div></div>
+              <div class="sub">A unique account number generated per transaction. No callbacks, no waiting on confirmations.</div>
+              <div class="when">Settles in 1–10 min</div>
+            </div>
+            <div class="pm glass">
+              <div class="top"><div class="name">USSD</div><div class="ok">Instant</div></div>
+              <div class="sub">All major Nigerian banks. *894#, *737#, etc. Useful when the data network is patchy.</div>
+              <div class="when">Settles in &lt; 60s</div>
+            </div>
+          </div>
+
+          <div class="steps" style="margin-top:32px">
+            <div class="step glass">
+              <span class="badge">1</span>
+              <div>
+                <h3>Pick a plan or a single article</h3>
+                <p>From the homepage or any locked article. You'll see the NGN price (₦5,000/mo for Premium, ₦200 per single article) with no add-on fees at checkout.</p>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">2</span>
+              <div>
+                <h3>Choose a payment method</h3>
+                <p>Card, bank transfer, USSD, Paystack or Monnify. The selected method is highlighted in gold. If your card was already saved, you can pay with one tap.</p>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">3</span>
+              <div>
+                <h3>Confirm &amp; get your SMS receipt</h3>
+                <p>The success screen shows your unlocked content immediately. You'll also receive an SMS to your registered phone with the transaction ID, plan, and a link to download a PDF receipt.</p>
+                <div class="meta"><span class="tag">SMS receipt</span><span class="tag">PDF download</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>Refunds:</b> Single articles are non-refundable once unlocked. Subscriptions can be refunded within 7 days of payment if you've consumed less than 3 articles — contact us at hello@fortunegate.ng with your transaction ID.
+          </div>
+        </article>
+
+        <!-- 03 rewards -->
+        <article id="rewards" class="ht-section">
+          <div class="overline">Section 03</div>
+          <h2>How to claim a reward if you win.</h2>
+          <p class="lead">Every month's draw is broadcast live and winners are notified by phone within 24 hours. Payouts under ₦1M land in your bank in 48 hours. Physical prizes ship via courier.</p>
+
+          <div class="steps">
+            <div class="step glass">
+              <span class="badge">1</span>
+              <div>
+                <h3>We call you within 24 hours</h3>
+                <p>The phone number you used to sign up is the one we call. We confirm your full name, the prize won, and ask you to read a 4-digit confirmation code we sent by SMS.</p>
+                <div class="meta"><span class="tag">9am–7pm WAT</span><span class="tag">3 attempts</span></div>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">2</span>
+              <div>
+                <h3>Verify on <a href="claim.html" style="color:var(--fg-gold-300)">claim.html</a></h3>
+                <p>For cash payouts: bank name, account number, account name (must match the name on file). For physical prizes: delivery address and a confirmation phone number.</p>
+                <div class="meta"><span class="tag">Form takes ~2 min</span></div>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">3</span>
+              <div>
+                <h3>We pay out within 48 hours</h3>
+                <p>Cash winnings are credited to your verified bank account by NIBSS transfer. Physical prizes ship by GIG Logistics or DHL depending on item value — you'll get a tracking SMS.</p>
+                <div class="meta"><span class="tag">NIBSS transfer</span><span class="tag">Public log</span></div>
+                <div class="screenshot img-ph" data-label="screen · claim form"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>Heads up:</b> We never ask for processing fees, bank PINs, or to "activate" your prize. Every legitimate FortuneGate call comes from <b>+234 800 000 0000</b>. Anything else is a scam.
+          </div>
+        </article>
+
+        <!-- 04 referrals -->
+        <article id="referrals" class="ht-section">
+          <div class="overline">Section 04</div>
+          <h2>Earn from referrals.</h2>
+          <p class="lead">Your unique code links anyone who signs up with it to you for 12 months. We pay automatically — no thresholds, no minimum withdrawal.</p>
+
+          <div class="schedule">
+            <div class="rr h"><div>Event</div><div class="v">Payout</div><div>Frequency</div><div>When you're paid</div></div>
+            <div class="rr"><div>Their 1st subscription</div><div class="v">₦100</div><div>One-time</div><div>1st of next month</div></div>
+            <div class="rr"><div>Every renewal after</div><div class="v">₦50</div><div>Monthly · 12 months</div><div>1st of each month</div></div>
+            <div class="rr"><div>Annual subscription</div><div class="v">₦600</div><div>One-time bonus</div><div>1st of next month</div></div>
+            <div class="rr"><div>Elite tier referral</div><div class="v">2× standard</div><div>Multiplier</div><div>Applied automatically</div></div>
+          </div>
+
+          <div class="steps" style="margin-top:32px">
+            <div class="step glass">
+              <span class="badge">1</span>
+              <div>
+                <h3>Find your code</h3>
+                <p>It's on your Earn tab — looks like <b style="color:var(--fg-gold-300);font-family:var(--font-display)">FG-TUNDE</b> or similar. You can change it once per quarter from your dashboard.</p>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">2</span>
+              <div>
+                <h3>Share it</h3>
+                <p>Tap "Share" for a one-tap WhatsApp/SMS template with the code pre-filled. Your friend enters it at sign-up — they don't need to copy a URL, just the code.</p>
+              </div>
+            </div>
+            <div class="step glass">
+              <span class="badge">3</span>
+              <div>
+                <h3>Watch your earnings</h3>
+                <p>Earnings update in real-time on your dashboard. On the 1st of every month, we credit your registered phone's bank — no withdrawal request needed.</p>
+                <div class="meta"><span class="tag">Real-time</span><span class="tag">Auto-payout</span><span class="tag">12-month window</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bottom CTA -->
+        <div class="glass-gold cta-band">
+          <div>
+            <h3>Ready to open the gate?</h3>
+            <p>Three minutes to sign up. Your first giveaway entry banks the moment your subscription clears.</p>
+            <div class="row" style="gap:10px">
+              <a class="btn btn-gold" href="02-prototype.html">Get started — ₦5,000 / mo →</a>
+              <a class="btn btn-ghost" href="homepage.html#plans">Compare plans</a>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="overline" style="text-align:right">Still got questions?</div>
+            <p style="color:var(--fg-text-mid);font-size:14px;margin:8px 0 12px">We answer every email within one business day.</p>
+            <a class="btn btn-ghost btn-sm" href="mailto:hello@fortunegate.ng">Email us →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-col ft-about">
+        <div class="brand"><span class="l">F</span><span>FortuneGate</span></div>
+        <p>Bridging the knowledge and capital gap for African entrepreneurs. Built in Lagos, for the next 10 million.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.66a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.09z"/></svg></a>
+          <a href="#" aria-label="X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.272 3.568z"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Platform</h4><ul><li><a href="homepage.html#content">Content library</a></li><li><a href="homepage.html#plans">Premium services</a></li><li><a href="homepage.html#earn">Referral programme</a></li><li><a href="homepage.html#live">Live events</a></li><li><a href="homepage.html#winners">Winners</a></li></ul></div>
+      <div class="ft-col"><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="how-to.html">How it works</a></li><li><a href="claim.html">Claim reward</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Terms of service</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Giveaway rules</a></li><li><a href="#">Refund policy</a></li><li><a href="#">NDPR notice</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 FortuneGate · Lagos, Nigeria · RC 7842-NG</span>
+      <span><a href="index.html">Design studio</a><a href="#">Status</a><a href="#">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky nav active state via IntersectionObserver
+  const sections = document.querySelectorAll('.ht-section');
+  const navLinks = document.querySelectorAll('.ht-nav a');
+  const linkById = Object.fromEntries([...navLinks].map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('on'));
+        linkById[e.target.id]?.classList.add('on');
+      }
+    });
+  }, {rootMargin: '-30% 0px -55% 0px'});
+  sections.forEach(s => io.observe(s));
+  document.querySelectorAll('.mob-menu a').forEach(a => a.addEventListener('click', () => document.getElementById('mobMenu').classList.remove('open')));
+</script>
+
+</body>
+</html>

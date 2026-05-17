@@ -173,17 +173,11 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="prototype-screens.jsx"></script>
 <script type="text/babel">
-  const { Screens, FLOW, TweaksPanel, TweakSection, TweakRadio, useTweaks } = window;
-
-  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "registerLayout": "separate"
-  }/*EDITMODE-END*/;
+  const { Screens, FLOW } = window;
 
   function App(){
-    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
     const [route, setRoute] = React.useState('splash');
     const [history, setHistory] = React.useState(['splash']);
     const [sheet, setSheet] = React.useState(null);
@@ -204,7 +198,7 @@
     const openSheet = (id) => setSheet(id);
     const closeSheet = () => setSheet(null);
 
-    const ctx = { go, back, openSheet, closeSheet, route, tweaks: t };
+    const ctx = { go, back, openSheet, closeSheet, route };
     const ScreenC = Screens[route] || Screens.splash;
     const SheetC = sheet ? Screens[sheet] : null;
 
@@ -212,7 +206,7 @@
       <div style={{height:'100%',display:'flex'}}>
         <div className="nav-rail">
           <div className="brand"><div className="l">F</div><div className="brand-name">FortuneGate</div></div>
-          <a className="back-link" href="studio.html">← All artifacts</a>
+          <a className="back-link" href="index.html">← All artifacts</a>
           <h3 style={{marginTop:14}}>Prototype</h3>
           {Object.entries(FLOW).map(([group, items]) => (
             <React.Fragment key={group}>
@@ -249,18 +243,6 @@
             <div className="hint">Tap the buttons in the prototype to navigate · or use the menu →</div>
           </div>
         </div>
-        <TweaksPanel title="Tweaks">
-          <TweakSection label="Register screen" />
-          <TweakRadio
-            label="Email + phone layout"
-            value={t.registerLayout}
-            options={[
-              { value: 'separate', label: 'Separate' },
-              { value: 'combined', label: 'Combined' }
-            ]}
-            onChange={(v) => { setTweak('registerLayout', v); go('register'); }}
-          />
-        </TweaksPanel>
       </div>
     );
   }

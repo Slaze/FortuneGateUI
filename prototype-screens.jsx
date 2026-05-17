@@ -56,50 +56,67 @@ const Splash = ({ go }) =>
     </div>
   </div>;
 
-const Register = ({ go, back, tweaks }) => {
-  const layout = (tweaks && tweaks.registerLayout) || 'separate';
-  return (
-  <>
+const Register = ({ go, back }) =>
+<>
     <TopBar title="Create account" back={back} />
-    <div className="pad" style={{ flex: 1, padding: '0 22px 22px', display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <div className="mid" style={{ fontSize: 14, lineHeight: 1.5 }}>We'll send a one-time code to verify your phone.</div>
-      {layout === 'combined' ? (
-        <div className="stack" style={{ gap: 8 }}>
-          <div className="overline">Email or phone</div>
-          <div className="input row" style={{ gap: 0, padding: 0 }}>
-            <span style={{ padding: '14px 0 14px 16px', fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--fg-text-hi)' }}>+234</span>
-            <input className="input" placeholder="803 442 1199 · or email" style={{ border: 'none', background: 'transparent', padding: '14px 16px', flex: 1 }} />
-          </div>
+    <div className="pad" style={{ flex: 1, padding: '0 22px 22px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div className="mid" style={{ fontSize: 13, lineHeight: 1.5 }}>Step 1 of 2 · Your details. We'll verify your phone next.</div>
+      <div className="row" style={{ gap: 10 }}>
+        <div className="stack grow" style={{ gap: 6 }}>
+          <div className="overline">First name</div>
+          <input className="input" placeholder="Tunde" required />
         </div>
-      ) : (
-        <>
-          <div className="stack" style={{ gap: 8 }}>
-            <div className="overline">Email</div>
-            <input className="input" type="email" placeholder="you@example.com" />
-          </div>
-          <div className="stack" style={{ gap: 8 }}>
-            <div className="overline">Phone number</div>
-            <div className="input row" style={{ gap: 0, padding: 0 }}>
-              <span style={{ padding: '14px 0 14px 16px', fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--fg-text-hi)' }}>+234</span>
-              <input className="input" placeholder="803 442 1199" style={{ border: 'none', background: 'transparent', padding: '14px 16px', flex: 1 }} />
-            </div>
-          </div>
-        </>
-      )}
-      <div className="stack" style={{ gap: 8 }}>
+        <div className="stack grow" style={{ gap: 6 }}>
+          <div className="overline">Surname</div>
+          <input className="input" placeholder="Adesina" required />
+        </div>
+      </div>
+      <div className="stack" style={{ gap: 6 }}>
+        <div className="overline">Email</div>
+        <input className="input" type="email" placeholder="you@example.com" required />
+      </div>
+      <div className="stack" style={{ gap: 6 }}>
+        <div className="overline">Password</div>
+        <input className="input" type="password" placeholder="At least 8 characters" required />
+      </div>
+      <div className="stack" style={{ gap: 6 }}>
+        <div className="overline">Confirm password</div>
+        <input className="input" type="password" placeholder="Re-enter password" required />
+      </div>
+      <div className="stack" style={{ gap: 6 }}>
         <div className="overline">Referral code · optional</div>
         <input className="input" placeholder="FG-XXXX" />
       </div>
       <label className="row" style={{ gap: 10, fontSize: 13, color: 'var(--fg-text-mid)', cursor: 'pointer' }}>
         <span style={{ width: 18, height: 18, borderRadius: 5, border: '1px solid var(--fg-border-hi)', background: 'rgba(212,160,23,.1)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--fg-gold-500)' }}>{ICN.check}</span>
-        I agree to Terms &amp; Privacy
+        I confirm I am 18 years or older &amp; agree to Terms
       </label>
+      <div style={{ flex: 1 }} />
+      <button className="btn btn-primary" onClick={() => go('phone-verify')}>Continue →</button>
+    </div>
+  </>;
+
+const PhoneVerify = ({ go, back }) =>
+<>
+    <TopBar title="Verify phone" back={back} />
+    <div className="pad" style={{ flex: 1, padding: '0 22px 22px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <div className="mid" style={{ fontSize: 13, lineHeight: 1.5 }}>Step 2 of 2 · We'll text you a one-time code to confirm this phone.</div>
+      <div className="stack" style={{ gap: 6 }}>
+        <div className="overline">Phone number</div>
+        <div className="input row" style={{ gap: 0, padding: 0 }}>
+          <span style={{ padding: '14px 0 14px 16px', fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--fg-text-hi)' }}>+234</span>
+          <input className="input" placeholder="803 442 1199" style={{ border: 'none', background: 'transparent', padding: '14px 16px', flex: 1 }} required />
+        </div>
+        <div className="lo" style={{ fontSize: 11, marginTop: 4 }}>Standard SMS rates may apply. This becomes your login &amp; payout phone.</div>
+      </div>
+      <div className="glass" style={{ padding: 14, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+        <span style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(212,160,23,.12)', border: '1px solid var(--fg-border-hi)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flex: 'none', color: 'var(--fg-gold-300)' }}>{ICN.check}</span>
+        <div style={{ fontSize: 13, color: 'var(--fg-text-mid)', lineHeight: 1.5 }}>Your phone is also where giveaway winnings and referral payouts will be sent. Make sure it's reachable.</div>
+      </div>
       <div style={{ flex: 1 }} />
       <button className="btn btn-primary" onClick={() => go('otp')}>Send code →</button>
     </div>
-  </>
-  );
-};
+  </>;
 
 const OTP = ({ go, back }) =>
 <>
@@ -688,7 +705,7 @@ const Notifications = ({ back, go }) =>
 
 
 const Screens = {
-  splash: Splash, register: Register, otp: OTP, login: Login,
+  splash: Splash, register: Register, 'phone-verify': PhoneVerify, otp: OTP, login: Login,
   'onb-tier': OnbTier, 'onb-ref': OnbReferral,
   dash: Dashboard,
   feed: Feed, detail: Detail, 'detail-locked': DetailLocked,
@@ -699,7 +716,7 @@ const Screens = {
 };
 
 const FLOW = {
-  Auth: [['splash', 'Splash'], ['register', 'Register'], ['otp', 'OTP code'], ['login', 'Sign in'], ['onb-tier', 'Pick tier'], ['onb-ref', 'Referral']],
+  Auth: [['splash', 'Splash'], ['register', 'Register · Step 1'], ['phone-verify', 'Phone · Step 2'], ['otp', 'OTP code'], ['login', 'Sign in'], ['onb-tier', 'Pick tier'], ['onb-ref', 'Referral']],
   Content: [['feed', 'Feed'], ['detail', 'Article'], ['detail-locked', 'Locked article']],
   Plans: [['plans', 'Plans'], ['checkout', 'Checkout'], ['checkout-success', 'Success']],
   Money: [['dash', 'Dashboard'], ['earn', 'Earn'], ['payouts', 'Payouts']],
