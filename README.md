@@ -180,19 +180,13 @@ You can also **double-click `index.html`** — most pages work straight off the 
 **Q: Is this the real product?**
 No. It's a static visual mock — no real authentication, no database, no payments. Click flows are scripted to demonstrate the intended experience.
 
-**Q: Why does some data look manufactured?**
+**Q: Are these actual Data of the Platform?**
 All numbers, names and articles are placeholder content for demonstration. Final copy and imagery will replace them during build.
 
-**Q: Can I edit the screens?**
-The HTML is hand-written and editable, but design changes are easier to discuss in feedback rounds. Send notes; we'll iterate.
-
-**Q: Does it work on my iPhone 7?**
-Yes. Earlier builds shipped a self-contained bundle that needed `DecompressionStream` (Safari 16.4+), which broke iOS 15. That bundle was removed — the current site uses only standard HTML/CSS/JS and supports iOS 15 and up.
-
-**Q: What's the next step after sign-off?**
-Implementation following the design here.
+**Q: Can the screens be edited?**
+Send notes; we'll iterate and make the edits in production.
 
 ---
 
 **FortuneGate · UI preview · v0.2**
-Last updated: May 2026
+Last updated: 17 May 2026
